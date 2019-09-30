@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres
+    container_name: db_todo
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: todo_django
+
+  app:
+    build: .
+    container_name: app_todo
+    ports:
+      - '8000:8000'
+    environment:
+      PYTHONUNBUFFERED: 1
+    volumes:
+      - .:/todo_django
+    command:
+      python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
