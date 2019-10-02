@@ -10,6 +10,8 @@ RUN apk update \
     python3-dev \
     musl-dev \
     postgresql-dev \
+    tzdata \
+    && cp /usr/share/zoneinfo/Brazil/East /etc/localtime \
     && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && apk del --no-cache .build-deps \

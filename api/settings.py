@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'sendgrid_backend',
     'app',
 ]
 
@@ -112,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Brazil/East'
 
 USE_I18N = True
 
@@ -140,3 +141,8 @@ REST_FRAMEWORK = {
 }
 
 REST_USE_JWT = True
+
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+
+SENDGRID_API_KEY = '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'
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False

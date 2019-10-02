@@ -10,11 +10,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         required=True,
         style={'input_type': 'password', 'placeholder': 'Password'}
     )
+    email = serializers.EmailField(
+        required=True,
+    )
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'password', 'email')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('id', 'url', 'username', 'password', 'email')
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))

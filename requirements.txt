@@ -1,5 +1,6 @@
 Django>=2.0
 psycopg2
 djangorestframework
-django-rest-auth
 djangorestframework-jwt
+django-rest-auth
+django-sendgrid-v5

@@ -3,19 +3,22 @@ version: '3'
 services:
 
   db:
-    image: postgres
+    image: postgres:alpine
     container_name: db_todo
     restart: always
     ports:
       - '5432:5432'
     environment:
       POSTGRES_USER: postgres
+      TZ: 'UTC-3'
+      PGTZ: 'UTC-3'
 
   app:
     build: .
     container_name: app_todo
     ports:
       - '8000:8000'
+      - '587:587'
     environment:
       PYTHONUNBUFFERED: 1
     volumes:
