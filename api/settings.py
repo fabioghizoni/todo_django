@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_nested',
     'rest_auth',
     'sendgrid_backend',
     'app',
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Brazil/East'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 

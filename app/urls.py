@@ -1,19 +1,21 @@
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework_nested import routers
 from app import views
 
 
 router = routers.DefaultRouter()
-router.register('users', views.UserViewSet)
-# router.register('psw_retrieve',
-                # views.PasswordRetrieveViewSet,
-                # basename=)
+router.register(r'users', views.UserViewSet)
+
+users_router = routers.NestedSimpleRouter(router, r'users', lookup='user')
+users_router.register(r'todos', views.TodoListViewSet, basename='user-todos')
 
 urlpatterns = [
-    path('api/',
+    path(r'api/',
          include(router.urls)),
-    path('api/psw_retrieve',
+    path(r'api/',
+         include(users_router.urls)),
+    path(r'api/psw_retrieve',
          views.PasswordRetrieveViewSet.as_view({'post': 'create'})),
-    path('api/auth/',
+    path(r'api/auth/',
          include('rest_auth.urls')),
 ]

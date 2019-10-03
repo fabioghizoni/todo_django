@@ -4,3 +4,4 @@ djangorestframework
 djangorestframework-jwt
 django-rest-auth
 django-sendgrid-v5
+drf-nested-routers

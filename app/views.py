@@ -1,14 +1,40 @@
-from datetime import datetime
-
+from django.utils import timezone
+from django.core.mail import EmailMessage
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
-from app.serializers import UserSerializer
+from app.models import TodoList
+from app.serializers import (
+    UserSerializer,
+    TodoListSerializer
+)
 from app.permissions import IsLoggedInUserOrAdmin, IsAdminUser
+
+
+class TodoListViewSet(viewsets.ViewSet):
+
+    def list(self, request, user_pk=None):
+        user = get_object_or_404(User, pk=user_pk)
+        queryset = TodoList.objects.filter(user=user)
+        serializer = TodoListSerializer(
+            queryset,
+            context={'request': request},
+            many=True
+        )
+        return Response(serializer.data)
+
+    def create(self, request, user_pk=None):
+        user = get_object_or_404(User, pk=user_pk)
+
+        todo_list = TodoList.objects.create(
+            title=request.data['title'],
+            user_id=user_pk
+        )
+
+        return Response(todo_list, status=status.HTTP_201_CREATED)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -63,7 +89,7 @@ def send_mail_default(subject, message, to, file=None):
 
 
 def password_generator():
-    date = datetime.now()
+    date = timezone.localtime()
     x = int(date.strftime('%d'))*2
     xx = str(x) if x > 9 else '0' + str(x)
     y = int(date.strftime('%m'))*2
